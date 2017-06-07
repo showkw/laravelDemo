@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Entity\Member;
+use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -38,6 +39,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+//        $this->middleware('auth', ['except' => 'logout']);
     }
 
     /**
@@ -48,9 +50,10 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+        dump( $data );
+        exit;
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'phone' => 'required|max:11|unique:member',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -59,11 +62,12 @@ class AuthController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return User
+     * @return Member
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        return Member::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
