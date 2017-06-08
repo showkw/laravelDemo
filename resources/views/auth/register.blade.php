@@ -1,194 +1,72 @@
 <?php
-dump( session()->all() );
+/**
+ * File Name: register.blade.php
+ * Description:
+ * Created by PhpStorm.
+ * Auth: Showkw
+ * Date: 2017/6/9
+ * Time: 0:10
+ */
 ?>
 @extends('home.layout')
-@section('title', '注册用户-爱淘宝-淘宝网购物分享平台')
-@section('description', '爱淘宝是淘宝旗下购物分享综合型网站，致力于为消费者用互联网技术快速发现高性价比优质潮品、特惠活动，更有资深黄钻买手、时尚达人、红人模特分享购物体验、穿搭技巧')
-@section('keywords', '爱淘宝,导购,淘宝导购,淘宝达人推荐,购物分享')
+@section('title', '注册 - 用户中心')
 @section('staticFile')
-    <link rel="stylesheet" href="{{ asset('/home/css/amazeui.css') }}">
-    <link rel="stylesheet" href="{{ asset('/home/css/dlstyle.css') }}">
-    <style>
-        li.am-active{
-            border-bottom: 1px solid #0e90d2;
-        }
-        li.am-active a:hover,
-        li.am-active a:focus{
-            border: 0px!important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('/home/css/reg.css') }}">
+    <link rel="stylesheet" href="{{ asset('/static/plugin/layui/css/layui.css') }}">
+    <script type="text/javascript" src="{{ asset('/static/plugin/layui/layui.js') }}"></script>
+
 @endsection
-
 @section('content')
-    <div class="login-boxtitle">
-        <a href="/"><img alt="" src="{{ asset('/home/images/logobig.png')  }}"></a>
-    </div>
-    <div class="res-banner">
-        <div class="res-main">
-            <div class="login-banner-bg"><span></span><img src="{{ asset('/home/images/big.jpg')  }}" /></div>
-            <div class="login-box">
-                <div class="am-tabs" id="doc-my-tabs">
-                    <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify">
-                        <li class="am-active"><a href="">手机号注册</a></li>
-                        <li><a href="">邮箱注册</a></li>
-                    </ul>
-                    <div class="am-tabs-bd">
-                        <div class="am-tab-panel am-active">
-                            <form method="POST" action="{{ url('/register') }}" id="form-phone">
-                                <fieldset>
-                                {{ csrf_field() }}
-                                <div class="user-phone am-form-group">
-                                    <label for="phone"><i class="am-icon-mobile-phone am-icon-md"></i></label>
-                                    <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
-                                           placeholder="请输入手机号"  pattern="^[1][3-8]+\d{9}" required
-                                           data-validation-message="请输入正确的手机号码" />
-                                </div>
-                                <div class="verification am-form-group">
-                                    <label for="code"><i class="am-icon-code-fork"></i></label>
-                                    <input type="tel" name="code" id="code" placeholder="请输入验证码" required data-validation-message="请输入验证码" />
-                                    <a class="btn" href="javascript:;" onclick="getCode()" id="CodePhone">
-                                        <img id="dyMobileButton" src="{{ url( '/imageCode/1' ) }}" alt="验证码" />
-                                    </a>
-                                </div>
-                                <div class="verification am-form-group" id="moblie" style="display:none">
-                                    <label for="moblieCode"><i class="am-icon-lock"></i></label>
-                                    <input type="tel" name="moblieCode" id="moblieCode"
-                                           placeholder="请输入手机验证码" data-validation-message='手机验证码不正确' required/>
-                                    <button type="button" id="sendCode" class="am-btn am-btn-danger am-btn-xs">发送验证码</button>
-                                </div>
-                                <div class="user-pass am-form-group">
-                                    <label for="password"><i class="am-icon-lock"></i></label>
-                                    <input type="password" name="password" id="password" placeholder="设置密码"
-                                           data-validation-message='请输入至少6位密码' minlength="6"  required/>
-                                </div>
-                                    <div class="login-links">
-                                            <input id="reader-me" type="checkbox" checked
-                                                   style="width:18px;height:13px">同意商城《服务协议》
-                                    </div>
-                                    <div class="am-cf" style="margin-top:10px;margin-bottom:10px">
-                                        <input id="submit_phone" type="submit" value="注册"
-                                               class="am-btn am-btn-primary am-btn-sm am-fl">
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                        <div class="am-tab-panel">
-                            <form method="post" action="{{ url('/register') }}" id="form-email">
-                                {{ csrf_field() }}
-                                <div class="user-email am-form-group">
-                                    <label for="email"><i class="am-icon-envelope-o"></i></label>
-                                    <input type="email" name="email" id="email" placeholder="请输入邮箱账号"
-                                           data-validation-message='请输入正确的邮箱' required/>
-                                </div>
-                                <div class="user-pass am-form-group">
-                                    <label for="password"><i class="am-icon-lock"></i></label>
-                                    <input type="password" name="password" id="password" placeholder="设置密码"
-                                           data-validation-message='请输入至少6位密码并以字母开头' minlength="6"
-                                           pattern="^[a-zA-z]" required>
-                                </div>
-                                <div class="user-pass am-form-group">
-                                    <label for="passwordRepeat"><i class="am-icon-lock"></i></label>
-                                    <input type="password" name="password_confirmation" id="passwordRepeat"
-                                           placeholder="确认密码" data-validation-message='两次密码不一致'
-                                           data-equal-to="#password" required>
-                                </div>
-                                <div class="login-links">
-                                    <input id="reader-me" type="checkbox" checked
-                                           style="width:18px;height:13px"/>同意商城《服务协议》
-                                </div>
-                                <div class="am-cf">
-                                    <input id="submit_email" type="submit" name="" value="注册"
-                                           class="am-btn am-btn-primary am-btn-sm am-fl">
-                                </div>
-                            </form>
-                        </div>
-                        <hr>
-                    </div>
-
-                        <script>
-                            $(function() {
-                                $('#doc-my-tabs').tabs();
-                            })
-                            //获取验证码
-                            function getCode(  ) {
-                                var url = "{{ url( '/imageCode' ) }}" + "/" + Math.random();
-                                $( 'img#dyMobileButton' ).attr( 'src' , url );
-                            }
-                            $('#form-phone').validator({
-                                validate: function(validity) {
-                                    var $field = $(validity.field);
-                                    var v = $field.val();
-                                    var comparer = function(v1, v2) {
-                                        if (v1 != v2) {
-                                            validity.valid = false;
-                                        }
-                                    }
-                                    if (($(validity.field).is( $('input#Code')))){
-                                         $.get(
-                                             '{{ url("/checkImgCode") }}',
-                                             { code: v },
-                                             function(status){
-                                                 if( status == 1 ){
-                                                     $('input#Code').addClass( 'am-field-error' ).
-                                                     parent().addClass('am-form-error');
-                                                 }
-                                             }
-                                        );
-                                    }
-                                    if (($(validity.field).is('#moblieCode'))){
-                                        comparer("{{ session('RegMoblie') }}", v);
-                                    }
-                                },
-                                onInValid: function(validity) {
-                                    var $field = $(validity.field);
-                                    var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
-                                    $field.popover({
-                                        content: msg
-                                        ,trigger: 'focus'
-                                    });
-                                }
-                            });
-                            $('#form-email').validator({
-                                onInValid: function(validity) {
-                                    var $field = $(validity.field);
-                                    var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
-                                    $field.popover({
-                                        content: msg
-                                        ,trigger: 'focus'
-                                    });
-                                }
-                            });
-                            $('button#sendCode').click(function () {
-                                $.get({
-                                    'url': "{{ url('sms/send') }}",
-                                });
-                                var $btn = $(this)
-                                var n = 60;
-                                $btn.attr('disabled','true');
-                                var timeid = setInterval(function(){
-                                    $btn.html('重新发送('+ n +')');
-                                    if( n == 1 ){
-                                        $btn.button('reset');
-                                        clearInterval(timeid);
-                                        $btn.html('发送验证码');
-                                        $btn.attr('disabled','false');
-                                    }
-                                    n--;
-                                }, 1000);
-                            });
-                        </script>
-
-                    </div>
-                </div>
+    <div class="wapper">
+        <div class="wrap">
+            <img src="{{ asset( '/images/home/logo.png' ) }}">
+            <p>注册小米帐号</p>
+            <div class="regbox">
+                <form action="" method="POST">
+                    <br>
+                    <input id='mb' class='input' type="text" name="phone" placeholder="请输入手机号码!" maxlength="11">
+                    <input id='nm' class='input' type="text" name="username" id="1" placeholder="请输入用户名!" maxlength="12">
+                    <input id='pwd' class='input' type="password" name="password" id="1" placeholder="请输入最少6位密码!" maxlength="16">
+                    <input type="text" name="verify" placeholder="验证码" value="">
+                    <img id="imgVerify" src="" onclick='this.src=this.src+"?c="+Math.random()' title="点击刷新"/>
+                    <br>
+                    <input type="submit" name="submit" value="下一步">
+                    <!-- 					<div class="msg">点击“立即注册”，即表示您同意并愿意遵守小米 <a href="">用户协议</a> 和 <a href="">隐私政策</a> </div> -->
+                </form>
             </div>
         </div>
+        <div class="foot">
+            简体 | 繁体 | English | 常见问题<br>&copy;2017 版权所有-京ICP备10046444-<img src="{{ asset( '/images/home/ghs.png' ) }}" />京公网安备11010802020134号-京ICP证110507号
+        </div>
     </div>
-    <hr>
-    @include('home.public.footer')
     <script>
-        $(function() {
-            $('#doc-my-tabs').tabs();
-        })
+        layui.use('layer', function() {
+            var $ = layui.jquery, layer = layui.layer;
+            $('#mb').on('mouseover', function () {
+                layer.tips('请输入正确的11位手机号码', '#mb', {
+                    tips: [2, '#3595CC'],
+                    time: 2000
+                });
+            });
+            $('#nm').on('mouseover', function () {
+                layer.tips('仅允许注册以字母开头的用户名', '#nm', {
+                    tips: [2, '#78BA32'],
+                    time: 2000
+                });
+            });
+            $('#pwd').on('mouseover', function () {
+                layer.tips('请输入6-16位密码', '#pwd', {
+                    tips: [2, '#F52579'],
+                    time: 2000
+                });
+            });
+            $('#imgVerify').on('mouseover', function () {
+                layer.tips('看不清？点击刷新', '#imgVerify', {
+                    tips: [2, '#FF6633'],
+                    time: 2000
+                });
+            });
+        });
     </script>
-    <script src=""></script>
+    </body>
 @endsection

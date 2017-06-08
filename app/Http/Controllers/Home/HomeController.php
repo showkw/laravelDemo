@@ -24,7 +24,7 @@ class HomeController extends Controller
 
     public function  index( Request $request )
     {
-        dump($request->session()->all());
+//        dump($request->session()->all());
         return view( 'home.index' );
     }
 

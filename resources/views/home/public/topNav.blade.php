@@ -8,65 +8,50 @@
  * Time: 23:14
  */
 ?>
+<!-- 顶部导航开始 -->
 <div id="top">
-<div class="ct">
-<div class="top-nav">
-<volist name='top_nav' id='vo'>
-<a href="{$vo['url']}">{$vo['name']}</a>
-<span class="cut">|</span>
-</volist>
-<a href="">SelectRegion</a>
-</div>
-<div class="top-cart">
-</div>
-<div class="top-menu">
-    <div class="cartlist">
-        <volist name="cartlist" id='vo'>
-            <div id="cart{$key}" class='alert'>
-                <div class='c_img left'><img src="{$vo['picimg']}" width='60' height='60'></div>
-                <div class='c_name left'>{$vo['goodname']}{$vo['version']}{$vo['color']}</div>
-                <div class='c_price left'>{$vo['price']}元 x{$vo['number']}</div>
-                <div class='c_close left'><a href="{:U('/Home/Index/index?cart_del&scid='.$key)}" class="close" data-dismiss="alert" style="float:none;color:#000;font-size: 24px;vertical-align: middle;margin-left: 10px;">&times;</a></div>
+    <div class="ct">
+        <div class="top-nav">
+            <a href="/">小米商城</a>
+            <span class="cut">|</span><a href="/">MIUI</a>
+            <span class="cut">|</span><a href="">游戏</a>
+            <span class="cut">|</span><a href="">多看阅读</a>
+            <span class="cut">|</span><a href="">云服务</a>
+            <span class="cut">|</span><a href="">金融</a>
+            <span class="cut">|</span><a href="">小米商城移动版</a>
+            <span class="cut">|</span><a href="">问题反馈</a>
+            <span class="cut">|</span>
+            <a href="#">SelectRegion</a>
+        </div>
+        <div class="top-cart">
+            <div class="cart" style="background:#424242;">
+                <i class="icon-shopping-cart"> </i>购物车(0)
             </div>
-            <?php $knum = count($cartlist);$total1 +=($vo['price']*$vo['number']); ?>
-        </volist>
-    </div>
-    <div class='total-info'>
-        <div class='num-info left'>
-							<span>共计<span class='kunm'>{$knum}</span>件
-							<span class='t_price'>{$total1}元</span>
-							</span>
+            <div class="top-menu">
+                <div class="loading">购物车中还没有商品，赶紧选购吧！</div>
+            </div>
         </div>
-        <div class='right'>
-            <a class='btn' href="{:U('/Home/Index/cart')}">去购物车结算</a>
+        <div class="top-login">
+            <div class="user">
+                <a href="#">
+                    <span class="username"></span><span class="user1"></span>
+                </a>
+                <div class="tuser_menu">
+                    <li class="userlink"><a href="#">个人中心</a></li>
+                    <li class="userlink"><a href="#">评价晒单</a></li>
+                    <li class="userlink"><a href="#">退出登录</a></li>
+                </div>
+            </div>
+            <span class="cut">|</span>
+            <a class="message" href="">消息通知</a>
+            <span class="cut">|</span>
+            <a class="myorders" href="#">我的订单</a>
+            <a href="{{ url('/login')  }}">登陆</a>
+            <span class="cut">|</span>
+            <a href="{{ url('/register')  }}">注册</a>
+            <span class="cut">|</span>
+            <a class="message" href="">消息通知</a>
         </div>
     </div>
 </div>
-</div>
-<div class="cart" style="background:#424242;">
-    <i class="icon-shopping-cart"> </i>购物车(0)
-</div>
-<div class="top-menu">
-    <div class="loading">购物车中还没有商品，赶紧选购吧！</div>
-</div>
-</div>
-<div class="top-login">
-    <?php
-    if(isset($_SESSION['userinfo'])){
-        // print_r('$');
-        echo '<div class="user"><a href="'.U('/Home/User/index').'"><span class="username">'.$_SESSION['userinfo']['name'].'</span><span class="user1"></a><div class="tuser_menu">';
-        echo '<li class="userlink"><a href="'.U('/Home/User/index').'">个人中心</a></li>';
-        echo '<li class="userlink"><a href="#">评价晒单</a></li>';
-        echo '<li class="userlink"><a href="'.U('/Home/User/logout').'">退出登录</a></li>';
-        echo '</div></div><span class="cut">|</span><a class="message" href="">消息通知</a>
-					<span class="cut">|</span><a class="myorders" href="'.U('/Home/User/order').'">我的订单</a>
-			    ';
-    }else{
-        echo '<a href="'.U('/Home/User/login').'">登陆</a><span class="cut">|</span><a href="'.U('/Home/User/regsiter').'">注册</a><span class="cut">|</span><a class="message" href="">消息通知</a>';
-    }
-    ?>
-
-</div>
-</div>
-</div>
-<!-- 顶部结束 -->
+<!-- 顶部导航结束 -->

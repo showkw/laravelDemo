@@ -19,3 +19,6 @@ Route::get('/moblieCode/send', 'CodeController@getMoblieCode');
 Route::get('/checkImgCode', 'CodeController@checkCode');
 Route::get('/sendCode', 'SmsController@send');
 Route::get('/sms/check', 'SmsController@check');
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
