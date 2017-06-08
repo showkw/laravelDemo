@@ -50,14 +50,41 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        dump( $data );
-        exit;
-        return Validator::make($data, [
-            'phone' => 'required|max:11|unique:member',
-            'password' => 'required|min:6|confirmed',
-        ]);
+//        dump( $data );
+//        exit;
+        //判断是通过手机注册还是邮箱注册
+        if( array_key_exists('phone', $data) ){
+            return Validator::make($data, [
+                'phone' => [
+                    'required',
+                    'unique:member',
+                    'regex:/^1[3-8][\d]{9}/',
+                ],
+                'password' => [
+                    'required',
+                    'confirmed',
+                    'min:6',
+                    'alpha_num',
+                    'regex:/^[a-zA-Z]/',
+                ],
+            ]);
+        }else{
+            return Validator::make($data, [
+                'email' =>[
+                    'required',
+                    'unique:member',
+                    'email',
+                ],
+                'password' => [
+                    'required',
+                    'min:6',
+                    'confirmed',
+                    'alpha_num',
+                    'regex:/^[a-zA-Z]/',
+                ],
+            ]);
+        }
     }
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -66,11 +93,18 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-
-        return Member::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        if ( array_key_exists('phone', $data) ) {
+            return Member::create([
+                'nickname'=> $data['nickname'],
+                'phone' => $data['phone'],
+                'password' => bcrypt($data['password']),
+            ]);
+        }else{
+            return Member::create([
+                'nickname'=> $data['nickname'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        }
     }
 }

@@ -15,24 +15,26 @@
         <title>@yield('title')</title>
         <meta name="description" content="@yield('description')"/>
         <meta name="keywords" content="@yield('keywords')"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=1226" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+        <meta http-equiv="pragram" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="shortcut icon" href="favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
         @section('staticFile')
-            <link rel="stylesheet" href="{{ asset('/home/css/amazeui.css') }}">
-            <link rel="stylesheet" href="{{ asset('/home/css/admin.css') }}">
-            <link rel="stylesheet" href="{{ asset('/home/css/hmstyle.css') }}">
-            <link rel="stylesheet" href="{{ asset('/home/css/skin.css') }}">
-            <link rel="stylesheet" href="{{ asset('/home/basic/css/demo.css') }}">
+            <link rel="stylesheet" href="{{ asset('/static/css/font-awesome.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('/static/css/bootstrap.min.css') }}">
         @show
-        <script type="text/javascript" src="{{ URL::asset('/pub/js/jquery.min.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('/home/js/amazeui.min.js') }}"></script>
-{{--        <script type="text/javascript" src="{{ URL::asset('/home/basic/js/quick_links.js') }}"></script>--}}
+        <script type="text/javascript" src="{{ asset('/static/js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/static/plugin/layui/layui.js') }}"></script>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
     <body>
-    @section('content')
-        @include('home.public.header')
-        @include('home.public.footer')
-    @show
+    @yield('content')
     </body>
 </html>
 

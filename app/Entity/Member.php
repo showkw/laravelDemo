@@ -22,7 +22,7 @@ class Member extends Authenticatable
 
     //必填项
     protected $fillable = [
-        'phone', 'password',
+        'phone','nickname','email', 'password',
     ];
 
     //隐藏项

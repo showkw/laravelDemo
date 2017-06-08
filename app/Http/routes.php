@@ -14,4 +14,8 @@ use App\Entity\Member;
 
 Route::get( '/', 'Home\HomeController@index' );
 Route::auth();
-Route::get('/code/{tmp}', 'CodeController@getCode');
+Route::get('/imageCode/{tmp}', 'CodeController@getImageCode');
+Route::get('/moblieCode/send', 'CodeController@getMoblieCode');
+Route::get('/checkImgCode', 'CodeController@checkCode');
+Route::get('/sendCode', 'SmsController@send');
+Route::get('/sms/check', 'SmsController@check');
